@@ -3,83 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para ti 💖</title>
+<title>TEST 💖</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Arial;
   background: black;
-}
-
-/* LOGIN */
-#login {
-  position: absolute;
-  width: 100%;
-  top: 40%;
-  text-align: center;
-  color: white;
-  z-index: 10;
+  font-family: Arial;
 }
 
 /* UNIVERSO */
 #universe {
-  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, #0a0a1a, #000000);
-  overflow: hidden;
+  background: radial-gradient(circle, #0a0a1a, #000);
 }
 
-/* 🌙 LUNA CON LUZ ANIMADA */
+/* 🌙 LUNA */
 .moon {
   position: absolute;
-  top: 8%;
-  right: 8%;
+  top: 10%;
+  right: 10%;
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea, #bdbdbd);
-  animation: moonGlow 3s ease-in-out infinite;
+  background: radial-gradient(circle at 30% 30%, #fff, #ddd, #aaa);
+  box-shadow: 0 0 80px white;
 }
 
-/* brillo de la luna */
-@keyframes moonGlow {
-  0%, 100% {
-    box-shadow: 0 0 40px rgba(255,255,255,0.7),
-                0 0 80px rgba(255,180,255,0.2);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 70px rgba(255,255,255,1),
-                0 0 140px rgba(255,180,255,0.5);
-    transform: scale(1.03);
-  }
-}
-
-/* CRÁTERES */
-.moon::before,
-.moon::after {
-  content: "";
+/* 💖 MENSAJE (FORZADO VISIBILIDAD) */
+.mensaje {
   position: absolute;
-  background: rgba(120,120,120,0.35);
-  border-radius: 50%;
-}
-
-.moon::before {
-  width: 28px;
-  height: 28px;
-  top: 35px;
-  left: 40px;
-}
-
-.moon::after {
-  width: 18px;
-  height: 18px;
-  top: 85px;
-  left: 95px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  color: pink;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+  text-shadow: 0 0 10px pink;
+  background: rgba(0,0,0,0.4);
+  padding: 15px;
+  border-radius: 15px;
+  z-index: 999;
+  white-space: pre-line;
 }
 
 /* ESTRELLAS */
@@ -89,155 +59,34 @@ body {
   height: 2px;
   background: white;
   border-radius: 50%;
-  opacity: 0.3;
-  animation: twinkle 3s infinite ease-in-out;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.8); }
-}
-
-/* FUGACES */
-.shooting-star {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px white;
-  animation: shoot 1s linear forwards;
-}
-
-@keyframes shoot {
-  from { transform: translate(0,0); opacity: 1; }
-  to { transform: translate(600px,300px); opacity: 0; }
-}
-
-/* MENSAJES FLOTANTES */
-.float-msg {
-  position: absolute;
-  color: pink;
-  font-size: 16px;
-  text-shadow: 0 0 10px pink;
-  animation: floatUp 5s ease-in-out forwards;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-200px); opacity: 0; }
-}
-
-/* 💖 MENSAJE PRINCIPAL (FINAL PERFECTO) */
-.mensaje {
-  display: none;
-  position: fixed;
-  top: 52%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 75%;
-  text-align: center;
-  color: pink;
-  z-index: 9999;
-  font-size: 13px;
-  line-height: 1.5;
-  text-shadow: 0 0 8px pink;
-  white-space: pre-line;
-  background: rgba(0,0,0,0.25);
-  padding: 12px;
-  border-radius: 15px;
-  backdrop-filter: blur(4px);
 }
 </style>
 </head>
 
 <body>
 
-<div id="login">
-  <h2>🔐 Acceso</h2>
-  <input type="password" id="password">
-  <button onclick="entrar()">Entrar</button>
-</div>
-
 <div id="universe">
   <div class="moon"></div>
-</div>
 
-<!-- 💖 MENSAJE -->
-<div id="mensajePrincipal" class="mensaje">
+  <div class="mensaje">
 Feliz cumpleaños, mi bebe emosha❤️
 
-Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, toyo tiene másh sentido, toyo che siente másh monito. Tu sonrisa es mi lugar favorito y tu forma de ser es algo que nunca dejaré de admirar.
+Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, todo tiene más sentido.
 
-Gachash por cada momento, por cada risa, por cada becho que me llena el alma. Eres lo mejor que me ha pasado y ño cambiaría naya de lo que tenemos.
-
-Decheo que este nuevo año de vida te traiga toyo lo que sueñas, porque te lo mereces más que nadie. Y quelo que sepas que voy a estar a tu lado para celebrarlo todo contigo.
-
-Tiamuuu muchísimo💖
+Te amo muchísimo 💖
+  </div>
 </div>
 
 <script>
-function entrar() {
-  if (document.getElementById("password").value === "amor") {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("universe").style.display = "block";
-    document.getElementById("mensajePrincipal").style.display = "block";
+const u = document.getElementById("universe");
 
-    crearEstrellas();
-    setInterval(crearFugaz, 2000);
-    setInterval(crearMensaje, 1800);
-  } else {
-    alert("Clave incorrecta");
-  }
-}
-
-/* ESTRELLAS */
-function crearEstrellas() {
-  const universe = document.getElementById("universe");
-
-  for (let i = 0; i < 300; i++) {
-    let star = document.createElement("div");
-    star.className = "star";
-
-    star.style.top = Math.random() * window.innerHeight + "px";
-    star.style.left = Math.random() * window.innerWidth + "px";
-    star.style.animationDuration = (Math.random() * 3 + 1) + "s";
-
-    universe.appendChild(star);
-  }
-}
-
-/* FUGACES */
-function crearFugaz() {
-  const u = document.getElementById("universe");
-
+/* ESTRELLAS SIMPLES (SIN FALLA) */
+for (let i = 0; i < 200; i++) {
   let s = document.createElement("div");
-  s.className = "shooting-star";
-
-  s.style.top = Math.random() * 50 + "%";
-  s.style.left = Math.random() * 100 + "%";
-
+  s.className = "star";
+  s.style.top = Math.random() * window.innerHeight + "px";
+  s.style.left = Math.random() * window.innerWidth + "px";
   u.appendChild(s);
-
-  setTimeout(() => s.remove(), 1000);
-}
-
-/* MENSAJES */
-const msgs = ["Te amo 💖","Mi universo 🌌","Siempre tú ❤️","Mi todo ✨"];
-
-function crearMensaje() {
-  const u = document.getElementById("universe");
-
-  let m = document.createElement("div");
-  m.className = "float-msg";
-  m.innerText = msgs[Math.floor(Math.random() * msgs.length)];
-
-  m.style.left = Math.random() * 100 + "%";
-  m.style.top = "90%";
-
-  u.appendChild(m);
-
-  setTimeout(() => m.remove(), 5000);
 }
 </script>
 
