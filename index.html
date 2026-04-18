@@ -111,7 +111,7 @@ html, body {
   50% { transform: scale(1.05); }
 }
 
-/* 💖 TEXTOS */
+/* 💖 TEXTO PRINCIPAL CON LATIDO */
 .card {
   position: absolute;
   top: 28%;
@@ -119,7 +119,7 @@ html, body {
   transform: translateX(-50%);
   width: 85%;
   background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.25);
   backdrop-filter: blur(6px);
   border-radius: 18px;
   padding: 10px;
@@ -128,8 +128,14 @@ html, body {
   font-size: 10px;
   line-height: 1.3;
   z-index: 6;
+
+  text-shadow:
+    0 0 5px rgba(255,182,193,0.8),
+    0 0 10px rgba(255,182,193,0.6),
+    0 0 20px rgba(255,182,193,0.4);
 }
 
+/* 💬 TEXTO SECUNDARIO */
 .card2 {
   position: absolute;
   top: 58%;
@@ -144,6 +150,25 @@ html, body {
   font-size: 9px;
   line-height: 1.3;
   z-index: 6;
+
+  text-shadow:
+    0 0 4px rgba(255,157,178,0.7),
+    0 0 8px rgba(255,157,178,0.5);
+}
+
+/* 💓 LATIDO */
+.heartbeat {
+  display: inline-block;
+  animation: heartbeat 1.4s infinite;
+  transform-origin: center;
+}
+
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.08); }
+  40%  { transform: scale(0.98); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 
 /* 🎵 BOTÓN */
@@ -168,9 +193,9 @@ html, body {
 
   <div class="moon"></div>
 
-  <!-- 💖 TEXTO COMPLETO RESTAURADO -->
+  <!-- 💖 TEXTO PRINCIPAL -->
   <div class="card">
-    Feliz cumpleaños, mi bebé hermosa ❤️<br><br>
+    <span class="heartbeat">Feliz cumpleaños, mi bebé hermosa ❤️</span><br><br>
 
     Hoy es un día muy especial, porque nació la persona que cambió mi vida de una manera que nunca imaginé.<br><br>
 
@@ -181,19 +206,17 @@ html, body {
     No hay palabras suficientes para explicar lo mucho que te amo, pero quiero que siempre lo recuerdes: eres lo más bonito que me ha pasado en la vida ❤️
   </div>
 
-  <!-- 💬 TEXTO 2 COMPLETO RESTAURADO -->
+  <!-- 💬 TEXTO SECUNDARIO -->
   <div class="card2">
     ODAAAAAA 🐮<br><br>
 
     Choi yio otra vez pidiendo perdón si a veces soy medio tonto, intenso o raro…<br><br>
 
-    Pero es que contigo me nace ser así porque te amo demasiado, demasiado, demasiado.<br><br>
+    Pero es que contigo me nace ser así porque te amo demasiado.<br><br>
 
-    A veces no sé expresarlo bien, pero siempre estás en mi mente y en mi corazón.<br><br>
+    Prometo cuidarte, apoyarte, respetarte y estar contigo en todo momento.<br><br>
 
-    Prometo cuidarte, apoyarte, respetarte y estar contigo en todo momento, sin importar lo que pase.<br><br>
-
-    No importa la distancia, el tiempo o las circunstancias… yo siempre voy a estar aquí para ti.<br><br>
+    No importa la distancia ni el tiempo… siempre voy a estar aquí para ti.<br><br>
 
     Tiamuuu muchísimo 💖
   </div>
@@ -237,7 +260,7 @@ function shootingStar() {
 setInterval(meteor, 2000);
 setInterval(shootingStar, 1200);
 
-/* 🎵 MÚSICA OFFLINE “FELIZ CUMPLEAÑOS” */
+/* 🎵 MÚSICA “FELIZ CUMPLEAÑOS” OFFLINE */
 let audioCtx;
 let playing = false;
 
