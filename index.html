@@ -26,34 +26,37 @@ body {
   position: absolute;
   top: 8%;
   right: 8%;
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #ffffff, #e6e6e6, #bdbdbd);
+  background:
+    radial-gradient(circle at 30% 30%, #ffffff, #e8e8e8 40%, #bdbdbd 70%, #9e9e9e);
+  box-shadow:
+    0 0 60px rgba(255,255,255,0.9),
+    0 0 120px rgba(255,200,255,0.25);
   overflow: hidden;
 }
 
-/* sombra lunar */
 .moon::after {
   content: "";
   position: absolute;
   top: 0;
-  left: 55px;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(0,0,0,0.95), black 70%);
+  left: 60px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,0,0,0.95), black 70%);
 }
 
-/* brillo direccional */
 .moon::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: 50%;
   background: radial-gradient(
     circle at 30% 30%,
-    rgba(255,255,255,0.6),
-    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.7),
+    rgba(255,255,255,0.2),
     transparent 60%
   );
   filter: blur(2px);
@@ -112,7 +115,7 @@ body {
   white-space: pre-line;
 }
 
-/* 💓 CORAZÓN LATIENDO REALISTA */
+/* 💓 CORAZÓN */
 .heart {
   position: absolute;
   top: 78%;
@@ -121,12 +124,12 @@ body {
   height: 90px;
   background: #ff4d6d;
   transform: translateX(-50%) rotate(-45deg);
-  box-shadow: 0 0 20px #ff4d6d;
+  box-shadow: 0 0 25px #ff4d6d;
   z-index: 9;
   animation: beat 1.2s infinite;
+  cursor: pointer;
 }
 
-/* forma corazón */
 .heart::before,
 .heart::after {
   content: "";
@@ -137,41 +140,36 @@ body {
   border-radius: 50%;
 }
 
-.heart::before {
-  top: -45px;
-  left: 0;
-}
+.heart::before { top: -45px; left: 0; }
+.heart::after { left: 45px; top: 0; }
 
-.heart::after {
-  left: 45px;
-  top: 0;
-}
-
-/* 💓 LATIDO REALISTA */
+/* 💓 LATIDO */
 @keyframes beat {
-  0%, 100% {
-    transform: translateX(-50%) rotate(-45deg) scale(1);
-    box-shadow: 0 0 15px #ff4d6d;
-    filter: brightness(1);
-  }
+  0%, 100% { transform: translateX(-50%) rotate(-45deg) scale(1); }
+  50% { transform: translateX(-50%) rotate(-45deg) scale(1.15); }
+}
 
-  25% {
-    transform: translateX(-50%) rotate(-45deg) scale(1.08);
-    box-shadow: 0 0 25px #ff4d6d;
-    filter: brightness(1.2);
-  }
+/* 💥 POP */
+.heart.pop {
+  animation: pop 0.6s ease-out;
+}
 
-  50% {
-    transform: translateX(-50%) rotate(-45deg) scale(1.15);
-    box-shadow: 0 0 40px #ff4d6d;
-    filter: brightness(1.4);
-  }
+@keyframes pop {
+  0% { transform: translateX(-50%) rotate(-45deg) scale(1); }
+  50% { transform: translateX(-50%) rotate(-45deg) scale(1.6); filter: brightness(2); }
+  100% { transform: translateX(-50%) rotate(-45deg) scale(1); }
+}
 
-  75% {
-    transform: translateX(-50%) rotate(-45deg) scale(1.05);
-    box-shadow: 0 0 20px #ff4d6d;
-    filter: brightness(1.1);
-  }
+/* 💖 partículas */
+.particle {
+  position: absolute;
+  font-size: 18px;
+  animation: floatUp 1.5s ease-out forwards;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120px); opacity: 0; }
 }
 </style>
 </head>
@@ -199,10 +197,8 @@ const u = document.getElementById("universe");
 for (let i = 0; i < 200; i++) {
   let s = document.createElement("div");
   s.className = "star";
-
   s.style.top = Math.random() * window.innerHeight + "px";
   s.style.left = Math.random() * window.innerWidth + "px";
-
   u.appendChild(s);
 }
 
@@ -210,16 +206,39 @@ for (let i = 0; i < 200; i++) {
 function crearFugaz() {
   let s = document.createElement("div");
   s.className = "shooting-star";
-
   s.style.top = Math.random() * 50 + "%";
   s.style.left = Math.random() * 100 + "%";
-
   u.appendChild(s);
-
   setTimeout(() => s.remove(), 1000);
 }
-
 setInterval(crearFugaz, 2000);
+
+/* 💓 CORAZÓN INTERACTIVO */
+const heart = document.querySelector(".heart");
+
+heart.addEventListener("click", () => {
+  heart.classList.add("pop");
+  crearCorazones();
+
+  setTimeout(() => {
+    heart.classList.remove("pop");
+  }, 600);
+});
+
+/* 💖 partículas */
+function crearCorazones() {
+  for (let i = 0; i < 10; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.innerHTML = "💖";
+    p.style.left = (50 + (Math.random() * 20 - 10)) + "%";
+    p.style.top = "75%";
+
+    u.appendChild(p);
+
+    setTimeout(() => p.remove(), 1500);
+  }
+}
 </script>
 
 </body>
