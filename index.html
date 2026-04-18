@@ -33,16 +33,17 @@ body {
   overflow: hidden;
 }
 
-/* 🌙 LUNA MEJORADA */
+/* 🌙 LUNA REALISTA */
 .moon {
   position: absolute;
-  top: 10%;
-  right: 10%;
+  top: 8%;
+  right: 8%;
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #ffffff, #e6e6e6, #bfbfbf);
-  box-shadow: 0 0 60px rgba(255,255,255,0.8), 0 0 120px rgba(255,180,255,0.4);
+  background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea, #bdbdbd);
+  box-shadow: 0 0 60px rgba(255,255,255,0.9),
+              0 0 120px rgba(255,180,255,0.4);
 }
 
 /* CRÁTERES */
@@ -50,13 +51,13 @@ body {
 .moon::after {
   content: "";
   position: absolute;
-  background: rgba(150,150,150,0.4);
+  background: rgba(140,140,140,0.35);
   border-radius: 50%;
 }
 
 .moon::before {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   top: 35px;
   left: 40px;
 }
@@ -64,8 +65,8 @@ body {
 .moon::after {
   width: 18px;
   height: 18px;
-  top: 80px;
-  left: 90px;
+  top: 85px;
+  left: 95px;
 }
 
 /* ESTRELLAS */
@@ -100,7 +101,7 @@ body {
   to { transform: translate(600px,300px); opacity: 0; }
 }
 
-/* MENSAJES */
+/* MENSAJES FLOTANTES */
 .float-msg {
   position: absolute;
   color: pink;
@@ -114,19 +115,24 @@ body {
   to { transform: translateY(-200px); opacity: 0; }
 }
 
-/* TEXTO PRINCIPAL */
+/* 💖 MENSAJE PRINCIPAL (ARREGLADO) */
 .mensaje {
   position: absolute;
-  top: 55%;
-  width: 90%;
-  left: 5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
   text-align: center;
   color: pink;
-  z-index: 5;
-  font-size: 16px;
-  line-height: 1.5;
+  z-index: 10;
+  font-size: 15px;
+  line-height: 1.6;
   text-shadow: 0 0 10px pink;
   white-space: pre-line;
+  background: rgba(0,0,0,0.25);
+  padding: 15px;
+  border-radius: 15px;
+  backdrop-filter: blur(4px);
 }
 </style>
 </head>
@@ -163,7 +169,7 @@ function entrar() {
 
     crearEstrellas();
     setInterval(crearFugaz, 2000);
-    setInterval(crearMensaje, 1500);
+    setInterval(crearMensaje, 1800);
   } else {
     alert("Clave incorrecta");
   }
@@ -200,8 +206,8 @@ function crearFugaz() {
   setTimeout(() => s.remove(), 1000);
 }
 
-/* MENSAJES */
-const msgs = ["Te amo 💖","Mi universo 🌌","Mi todo ✨","Siempre tú ❤️"];
+/* MENSAJES FLOTANTES */
+const msgs = ["Te amo 💖","Mi universo 🌌","Siempre tú ❤️","Mi todo ✨"];
 
 function crearMensaje() {
   const u = document.getElementById("universe");
