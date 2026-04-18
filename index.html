@@ -15,12 +15,22 @@ html, body {
   font-family: Arial;
 }
 
+/* 🌌 FONDO NEBULOSA */
 #universe {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at top, #2a0a3d, #000 70%);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,0,150,0.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0,200,255,0.12), transparent 45%),
+    radial-gradient(circle at top, #2a0a3d, #000 70%);
+  animation: drift 20s infinite alternate;
   overflow: hidden;
+}
+
+@keyframes drift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(20deg); }
 }
 
 /* ⭐ ESTRELLAS */
@@ -30,56 +40,71 @@ html, body {
   height: 2px;
   background: white;
   border-radius: 50%;
-  opacity: 1;
+  opacity: 0.8;
   box-shadow: 0 0 6px white;
-  animation: twinkle 3s infinite ease-in-out;
+  animation: twinkle 4s infinite ease-in-out;
   z-index: 1;
 }
 
 @keyframes twinkle {
-  0%,100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.8); }
+  0%,100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(2); }
 }
 
-/* 🌠 FUGAZ */
-.shooting-star {
+/* ☄️ METEORITO */
+.meteor {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 6px;
+  height: 6px;
   background: white;
-  box-shadow: 0 0 15px white;
   border-radius: 50%;
-  animation: shoot 1s linear forwards;
+  box-shadow:
+    0 0 15px white,
+    0 0 40px rgba(255,255,255,0.8),
+    0 0 80px rgba(255,255,255,0.4);
+  animation: meteorMove 1.8s linear forwards;
   z-index: 2;
 }
 
-@keyframes shoot {
-  from { transform: translate(0,0); opacity: 1; }
-  to { transform: translate(500px, 250px); opacity: 0; }
+.meteor::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(to left, white, transparent);
+  top: 2px;
+  left: -120px;
+  transform: rotate(25deg);
 }
 
-/* 🌙 LUNA CON SOMBRA LATERAL REALISTA */
+@keyframes meteorMove {
+  from { transform: translate(0,0); opacity: 1; }
+  to { transform: translate(900px, 450px); opacity: 0; }
+}
+
+/* 🌙 LUNA */
 .moon {
   position: absolute;
   top: 6%;
   right: 8%;
-  width: 155px;
-  height: 155px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
-
   background: radial-gradient(circle at 30% 30%,
     #ffffff 0%,
     #f2f2f2 30%,
-    #d9d9d9 60%,
-    #9c9c9c 100%);
-
+    #cfcfcf 60%,
+    #8c8c8c 100%);
   box-shadow:
-    -25px 10px 40px rgba(0,0,0,0.5),
-    inset -15px -15px 30px rgba(0,0,0,0.25),
-    inset 10px 10px 20px rgba(255,255,255,0.2),
-    0 0 80px rgba(255,255,255,0.6);
-
+    0 0 60px rgba(255,255,255,0.8),
+    0 0 120px rgba(255,255,255,0.3);
+  animation: pulse 4s infinite ease-in-out;
   z-index: 3;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 /* 💬 MENSAJES */
@@ -123,10 +148,9 @@ html, body {
 
 <div id="universe">
 
-  <!-- 🌙 LUNA -->
   <div class="moon"></div>
 
-  <!-- 💖 MENSAJE PRINCIPAL -->
+  <!-- 💖 TEXTO COMPLETO -->
   <div class="card">
     Feliz cumpleaños, mi bebé hermosa ❤️<br><br>
 
@@ -138,7 +162,7 @@ html, body {
     Te amo demasiado, más de lo que las palabras pueden explicar.
   </div>
 
-  <!-- 💬 MENSAJE SECUNDARIO -->
+  <!-- 💬 TEXTO SECUNDARIO COMPLETO -->
   <div class="card2">
     ODAAAAAA 🐮<br><br>
 
@@ -155,7 +179,7 @@ html, body {
 const u = document.getElementById("universe");
 
 /* ⭐ ESTRELLAS */
-for (let i = 0; i < 250; i++) {
+for (let i = 0; i < 300; i++) {
   let s = document.createElement("div");
   s.className = "star";
   s.style.top = Math.random() * window.innerHeight + "px";
@@ -163,17 +187,17 @@ for (let i = 0; i < 250; i++) {
   u.appendChild(s);
 }
 
-/* 🌠 FUGACES */
-function shoot() {
-  let s = document.createElement("div");
-  s.className = "shooting-star";
-  s.style.top = Math.random() * 40 + "%";
-  s.style.left = Math.random() * 100 + "%";
-  u.appendChild(s);
-  setTimeout(() => s.remove(), 1000);
+/* ☄️ METEORITOS */
+function meteor() {
+  let m = document.createElement("div");
+  m.className = "meteor";
+  m.style.top = Math.random() * 30 + "%";
+  m.style.left = Math.random() * 40 + "%";
+  u.appendChild(m);
+  setTimeout(() => m.remove(), 1800);
 }
 
-setInterval(shoot, 2000);
+setInterval(meteor, 3500);
 </script>
 
 </body>
