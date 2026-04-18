@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEST 💖</title>
+<title>Para ti 💖</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  background: black;
   font-family: Arial;
+  background: black;
 }
 
 /* UNIVERSO */
@@ -18,47 +18,94 @@ body {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, #0a0a1a, #000);
+  background: radial-gradient(circle at center, #0a0a1a, #000000);
 }
 
-/* 🌙 LUNA */
+/* 🌙 MEDIA LUNA REALISTA */
 .moon {
   position: absolute;
-  top: 10%;
-  right: 10%;
+  top: 8%;
+  right: 8%;
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff, #ddd, #aaa);
-  box-shadow: 0 0 80px white;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #e6e6e6, #bdbdbd);
+  box-shadow: 0 0 60px rgba(255,255,255,0.9),
+              0 0 120px rgba(255,180,255,0.3);
+  overflow: hidden;
 }
 
-/* 💖 MENSAJE (FORZADO VISIBILIDAD) */
-.mensaje {
+/* 🌑 sombra (fase lunar) */
+.moon::after {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  color: pink;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
-  text-shadow: 0 0 10px pink;
-  background: rgba(0,0,0,0.4);
-  padding: 15px;
-  border-radius: 15px;
-  z-index: 999;
-  white-space: pre-line;
+  top: 0;
+  left: 55px; /* ajusta la fase */
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(0,0,0,0.95), black 70%);
+  border-radius: 50%;
 }
 
-/* ESTRELLAS */
+/* ✨ brillo interno */
+.moon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset -20px 0 40px rgba(255,255,255,0.2);
+  border-radius: 50%;
+}
+
+/* ✨ ESTRELLAS */
 .star {
   position: absolute;
   width: 2px;
   height: 2px;
   background: white;
   border-radius: 50%;
+  opacity: 0.3;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.8); }
+}
+
+/* 🌠 FUGACES */
+.shooting-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white;
+  animation: shoot 1s linear forwards;
+  z-index: 5;
+}
+
+@keyframes shoot {
+  from { transform: translate(0,0); opacity: 1; }
+  to { transform: translate(500px,300px); opacity: 0; }
+}
+
+/* 💖 MENSAJE */
+.mensaje {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  text-align: center;
+  color: pink;
+  font-size: 13px;
+  line-height: 1.5;
+  text-shadow: 0 0 8px pink;
+  background: rgba(0,0,0,0.25);
+  padding: 12px;
+  border-radius: 15px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
 }
 </style>
 </head>
@@ -80,7 +127,7 @@ Te amo muchísimo 💖
 <script>
 const u = document.getElementById("universe");
 
-/* ESTRELLAS SIMPLES (SIN FALLA) */
+/* 🌟 ESTRELLAS */
 for (let i = 0; i < 200; i++) {
   let s = document.createElement("div");
   s.className = "star";
@@ -88,6 +135,21 @@ for (let i = 0; i < 200; i++) {
   s.style.left = Math.random() * window.innerWidth + "px";
   u.appendChild(s);
 }
+
+/* 🌠 FUGACES */
+function crearFugaz() {
+  let s = document.createElement("div");
+  s.className = "shooting-star";
+
+  s.style.top = Math.random() * 50 + "%";
+  s.style.left = Math.random() * 100 + "%";
+
+  u.appendChild(s);
+
+  setTimeout(() => s.remove(), 1000);
+}
+
+setInterval(crearFugaz, 2000);
 </script>
 
 </body>
