@@ -33,7 +33,7 @@ body {
   overflow: hidden;
 }
 
-/* 🌙 LUNA */
+/* 🌙 LUNA CON LUZ ANIMADA */
 .moon {
   position: absolute;
   top: 8%;
@@ -42,8 +42,21 @@ body {
   height: 150px;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #ffffff, #eaeaea, #bdbdbd);
-  box-shadow: 0 0 60px rgba(255,255,255,0.9),
-              0 0 120px rgba(255,180,255,0.4);
+  animation: moonGlow 3s ease-in-out infinite;
+}
+
+/* brillo de la luna */
+@keyframes moonGlow {
+  0%, 100% {
+    box-shadow: 0 0 40px rgba(255,255,255,0.7),
+                0 0 80px rgba(255,180,255,0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 70px rgba(255,255,255,1),
+                0 0 140px rgba(255,180,255,0.5);
+    transform: scale(1.03);
+  }
 }
 
 /* CRÁTERES */
@@ -115,25 +128,25 @@ body {
   to { transform: translateY(-200px); opacity: 0; }
 }
 
-/* 💖 MENSAJE PRINCIPAL (ARREGLADO DEFINITIVO) */
+/* 💖 MENSAJE PRINCIPAL (FINAL PERFECTO) */
 .mensaje {
   display: none;
   position: fixed;
-  top: 50%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 85%;
+  width: 75%;
   text-align: center;
   color: pink;
   z-index: 9999;
-  font-size: 15px;
-  line-height: 1.6;
-  text-shadow: 0 0 10px pink;
+  font-size: 13px;
+  line-height: 1.5;
+  text-shadow: 0 0 8px pink;
   white-space: pre-line;
-  background: rgba(0,0,0,0.35);
-  padding: 15px;
+  background: rgba(0,0,0,0.25);
+  padding: 12px;
   border-radius: 15px;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(4px);
 }
 </style>
 </head>
@@ -150,7 +163,7 @@ body {
   <div class="moon"></div>
 </div>
 
-<!-- 💖 MENSAJE FUERA DEL UNIVERSO (IMPORTANTE) -->
+<!-- 💖 MENSAJE -->
 <div id="mensajePrincipal" class="mensaje">
 Feliz cumpleaños, mi bebe emosha❤️
 
