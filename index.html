@@ -9,9 +9,8 @@
 body {
   margin: 0;
   background: black;
-  color: white;
-  font-family: Arial;
   overflow: hidden;
+  font-family: Arial;
 }
 
 /* LOGIN /
@@ -20,31 +19,19 @@ body {
   width: 100%;
   top: 40%;
   text-align: center;
-  z-index: 10;
-}
-
-input {
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-}
-
-button {
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  background: #ff0066;
   color: white;
+  z-index: 10;
 }
 
 / UNIVERSO /
 #universe {
   display: none;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  z-index: 1;
+  background: black;
 }
 
 / 🌙 LUNA /
@@ -55,87 +42,58 @@ button {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff, #bbb 60%, #666);
-
-  box-shadow:
-    0 0 30px #fff,
-    0 0 60px #fff,
-    0 0 100px #ffccff;
-
-  animation: moonGlow 3s infinite alternate;
+  background: radial-gradient(circle, #fff, #aaa, #555);
+  box-shadow: 0 0 40px white, 0 0 80px #ff99ff;
   z-index: 3;
 }
 
-@keyframes moonGlow {
-  from { box-shadow: 0 0 20px #fff, 0 0 40px #fff, 0 0 80px #ffccff; }
-  to   { box-shadow: 0 0 40px #fff, 0 0 80px #fff, 0 0 140px #ff99ff; }
-}
-
-/ ⭐ ESTRELLAS /
+/ ⭐ ESTRELLAS (AHORA SÍ VISIBLES) /
 .star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: twinkle 2s infinite alternate;
-  z-index: 2;
-}
-
-@keyframes twinkle {
-  from { opacity: 0.2; }
-  to { opacity: 1; }
-}
-
-/ 🌠 FUGACES /
-.shooting-star {
   position: absolute;
   width: 3px;
   height: 3px;
   background: white;
   border-radius: 50%;
-  box-shadow: 0 0 10px white, 0 0 20px #ff4da6;
+  z-index: 1;
+}
+
+/ 🌠 FUGACES /
+.shooting-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white;
   animation: shoot 1s linear forwards;
-  z-index: 2;
 }
 
 @keyframes shoot {
   from { transform: translate(0,0); opacity: 1; }
-  to { transform: translate(300px,300px); opacity: 0; }
+  to { transform: translate(400px,400px); opacity: 0; }
 }
 
 / 💫 MENSAJES /
 .float-msg {
   position: absolute;
-  color: #ff99c8;
+  color: pink;
   font-size: 14px;
-  pointer-events: none;
   animation: floatUp 6s linear forwards;
-  text-shadow: 0 0 10px #ff4da6;
-  z-index: 2;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translateY(-200px); opacity: 0; }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-200px); opacity: 0; }
 }
 
 / 💌 TEXTO /
 .mensaje {
   position: absolute;
   top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  max-height: 220px;
-  overflow-y: auto;
-  font-size: 16px;
-  color: #ffb3c6;
+  width: 100%;
   text-align: center;
-  line-height: 1.5em;
-  z-index: 4;
+  color: pink;
+  z-index: 5;
 }
 </style>
 </head>
@@ -144,8 +102,7 @@ button {
 
 <div id="login">
   <h2>🔐 Acceso</h2>
-  <input type="password" id="password" placeholder="Clave">
-  <br><br>
+  <input type="password" id="password">
   <button onclick="entrar()">Entrar</button>
 </div>
 
@@ -153,86 +110,71 @@ button {
   <div class="moon"></div>
 
   <div class="mensaje">
-Feliz cumpleaños, mi bebe emosha❤️<br><br>
-
-Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, toyo tiene másh sentido, toyo che siente másh monito. Tu sonrisa es mi lugar favorito y tu forma de ser es algo que nunca dejaré de admirar.<br><br>
-
-Gachash por cada momento, por cada risa, por cada becho que me llena el alma. Eres lo mejor que me ha pasado y ño cambiaría naya de lo que tenemos.<br><br>
-
-Decheo que este nuevo año de vida te traiga toyo lo que sueñas, porque te lo mereces más que nadie. Y quelo que sepas que voy a estar a tu lado para celebrarlo todo contigo.<br><br>
-
-Tiamuuu muchísimo💖
+    Feliz cumpleaños, mi bebe emosha❤️
   </div>
 </div>
 
 <script>
 function entrar() {
-  const pass = document.getElementById("password").value;
-
-  if (pass === "amor") {
+  if (document.getElementById("password").value === "amor") {
     document.getElementById("login").style.display = "none";
     document.getElementById("universe").style.display = "block";
 
     crearEstrellas();
-    setInterval(crearEstrellaFugaz, 2000);
-    setInterval(crearMensajeFlotante, 1500);
+    setInterval(crearFugaz, 2000);
+    setInterval(crearMensaje, 1500);
   } else {
-    alert("Clave incorrecta 💔");
+    alert("Clave incorrecta");
   }
 }
 
-/ ⭐ ESTRELLAS /
+/ ⭐ ESTRELLAS (FIX REAL) /
 function crearEstrellas() {
   const universe = document.getElementById("universe");
 
-  for (let i = 0; i < 250; i++) {
+  for (let i = 0; i < 300; i++) {
     let star = document.createElement("div");
     star.className = "star";
 
-    star.style.top = Math.random() * window.innerHeight + "px";
-    star.style.left = Math.random() * window.innerWidth + "px";
+    // USAMOS % en lugar de px (clave del fix)
+    star.style.top = Math.random() * 100 + "%";
+    star.style.left = Math.random() * 100 + "%";
 
     universe.appendChild(star);
   }
 }
 
-/ 🌠 FUGACES /
-function crearEstrellaFugaz() {
-  const universe = document.getElementById("universe");
+/ 🌠 /
+function crearFugaz() {
+  const u = document.getElementById("universe");
 
-  let star = document.createElement("div");
-  star.className = "shooting-star";
+  let s = document.createElement("div");
+  s.className = "shooting-star";
 
-  star.style.top = Math.random() * window.innerHeight * 0.5 + "px";
-  star.style.left = Math.random() * window.innerWidth + "px";
+  s.style.top = Math.random() * 50 + "%";
+  s.style.left = Math.random() * 100 + "%";
 
-  universe.appendChild(star);
+  u.appendChild(s);
 
-  setTimeout(() => star.remove(), 1000);
+  setTimeout(() => s.remove(), 1000);
 }
 
-/ 💫 MENSAJES */
-const mensajesFlotantes = [
-  "Te amo 💖",
-  "Mi todo ✨",
-  "Mi universo 🌌",
-  "Mi felicidad 💕",
-  "Siempre tú 💞"
-];
+/ 💫 */
+const msgs = ["Te amo 💖","Mi universo 🌌","Mi todo ✨"];
 
-function crearMensajeFlotante() {
-  const universe = document.getElementById("universe");
+function crearMensaje() {
+  const u = document.getElementById("universe");
 
-  let msg = document.createElement("div");
-  msg.className = "float-msg";
+  let m = document.createElement("div");
+  m.className = "float-msg";
+  m.innerText = msgs[Math.floor(Math.random() * msgs.length)];
 
-  msg.innerText = mensajesFlotantes[Math.floor(Math.random() * mensajesFlotantes.length)];
-  msg.style.left = Math.random() * window.innerWidth + "px";
-  msg.style.top = window.innerHeight - 50 + "px";
+  m.style.left = Math.random() * 100 + "%";
+  m.style.top = "90%";
 
-  universe.appendChild(msg);
+  u.appendChild(m);
 
-  setTimeout(() => msg.remove(), 6000);
+  setTimeout(() => m.remove(), 6000);
 }
 </script>
 
