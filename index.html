@@ -15,6 +15,56 @@ html, body {
   font-family: Arial;
 }
 
+/* 🔐 PANTALLA DE BLOQUEO */
+#lockScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, #2a0a3d, #000);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  color: white;
+  text-align: center;
+}
+
+#lockScreen input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+}
+
+#lockScreen button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+}
+
+/* 💥 EXPLOSIÓN */
+.starburst {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white;
+  z-index: 10000;
+  pointer-events: none;
+  animation: burst 1s ease-out forwards;
+}
+
+@keyframes burst {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+}
+
 /* 🌌 UNIVERSO */
 #universe {
   position: fixed;
@@ -27,6 +77,7 @@ html, body {
     radial-gradient(circle at top, #2a0a3d, #000 70%);
   animation: drift 20s infinite alternate;
   z-index: 1;
+  display: none;
 }
 
 @keyframes drift {
@@ -41,7 +92,6 @@ html, body {
   height: 2px;
   background: white;
   border-radius: 50%;
-  opacity: 0.8;
   box-shadow: 0 0 6px white;
   animation: twinkle 4s infinite ease-in-out;
   z-index: 0;
@@ -53,37 +103,25 @@ html, body {
 }
 
 /* ☄️ METEORITOS */
-.meteor {
+.meteor, .shooting-star {
   position: absolute;
   width: 6px;
   height: 6px;
   background: white;
   border-radius: 50%;
   box-shadow: 0 0 20px white;
-  animation: meteorMove 1.8s linear forwards;
   z-index: 2;
 }
 
-/* 🌠 FUGACES */
 .shooting-star {
-  position: absolute;
   width: 3px;
   height: 3px;
-  background: white;
-  box-shadow: 0 0 12px white;
-  border-radius: 50%;
   animation: shoot 1s linear forwards;
-  z-index: 2;
 }
 
 @keyframes shoot {
   from { transform: translate(0,0); opacity: 1; }
   to { transform: translate(500px, 250px); opacity: 0; }
-}
-
-@keyframes meteorMove {
-  from { transform: translate(0,0); opacity: 1; }
-  to { transform: translate(900px, 450px); opacity: 0; }
 }
 
 /* 🌙 LUNA */
@@ -111,7 +149,7 @@ html, body {
   50% { transform: scale(1.05); }
 }
 
-/* 💖 TEXTO PRINCIPAL CON LATIDO */
+/* 💖 TEXTOS */
 .card {
   position: absolute;
   top: 28%;
@@ -119,8 +157,6 @@ html, body {
   transform: translateX(-50%);
   width: 85%;
   background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.25);
-  backdrop-filter: blur(6px);
   border-radius: 18px;
   padding: 10px;
   color: #ffb6c1;
@@ -128,14 +164,9 @@ html, body {
   font-size: 10px;
   line-height: 1.3;
   z-index: 6;
-
-  text-shadow:
-    0 0 5px rgba(255,182,193,0.8),
-    0 0 10px rgba(255,182,193,0.6),
-    0 0 20px rgba(255,182,193,0.4);
+  text-shadow: 0 0 10px rgba(255,182,193,0.6);
 }
 
-/* 💬 TEXTO SECUNDARIO */
 .card2 {
   position: absolute;
   top: 58%;
@@ -150,24 +181,20 @@ html, body {
   font-size: 9px;
   line-height: 1.3;
   z-index: 6;
-
-  text-shadow:
-    0 0 4px rgba(255,157,178,0.7),
-    0 0 8px rgba(255,157,178,0.5);
+  text-shadow: 0 0 8px rgba(255,157,178,0.5);
 }
 
 /* 💓 LATIDO */
 .heartbeat {
   display: inline-block;
   animation: heartbeat 1.4s infinite;
-  transform-origin: center;
 }
 
 @keyframes heartbeat {
-  0%   { transform: scale(1); }
-  25%  { transform: scale(1.08); }
-  40%  { transform: scale(0.98); }
-  60%  { transform: scale(1.12); }
+  0% { transform: scale(1); }
+  25% { transform: scale(1.08); }
+  50% { transform: scale(0.98); }
+  75% { transform: scale(1.12); }
   100% { transform: scale(1); }
 }
 
@@ -182,43 +209,36 @@ html, body {
   color: white;
   padding: 8px 12px;
   border-radius: 10px;
-  font-size: 12px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- 🔐 BLOQUEO -->
+<div id="lockScreen">
+  <h2>🔐 Acceso especial</h2>
+  <p>¿Que Es Lo Que Mas Te Gusta?</p>
+  <input type="password" id="pass" placeholder="Respuesta">
+  <button onclick="checkPass()">Entrar</button>
+</div>
+
+<!-- 🌌 UNIVERSO -->
 <div id="universe">
 
   <div class="moon"></div>
 
-  <!-- 💖 TEXTO PRINCIPAL -->
   <div class="card">
     <span class="heartbeat">Feliz cumpleaños, mi bebé hermosa ❤️</span><br><br>
 
-    Hoy es un día muy especial, porque nació la persona que cambió mi vida de una manera que nunca imaginé.<br><br>
+    Hoy es un día muy especial porque naciste tú, la persona que cambió mi vida por completo.<br><br>
 
-    Desde que llegaste, todo se siente diferente. Los días son más bonitos, las risas más sinceras y mi corazón más tranquilo cuando estás tú.<br><br>
-
-    Gracias por existir, por ser tú, por tu forma de amar, por tu forma de sonreír y por hacerme sentir tan feliz incluso en mis días difíciles.<br><br>
-
-    No hay palabras suficientes para explicar lo mucho que te amo, pero quiero que siempre lo recuerdes: eres lo más bonito que me ha pasado en la vida ❤️
+    Te amo muchísimo 💖
   </div>
 
-  <!-- 💬 TEXTO SECUNDARIO -->
   <div class="card2">
     ODAAAAAA 🐮<br><br>
-
-    Choi yio otra vez pidiendo perdón si a veces soy medio tonto, intenso o raro…<br><br>
-
-    Pero es que contigo me nace ser así porque te amo demasiado.<br><br>
-
-    Prometo cuidarte, apoyarte, respetarte y estar contigo en todo momento.<br><br>
-
-    No importa la distancia ni el tiempo… siempre voy a estar aquí para ti.<br><br>
-
-    Tiamuuu muchísimo 💖
+    Siempre contigo 💖
   </div>
 
   <button id="musicBtn">🎵 Activar música</button>
@@ -227,6 +247,45 @@ html, body {
 
 <script>
 const u = document.getElementById("universe");
+
+/* 💥 EXPLOSIÓN */
+function createBurst() {
+  for (let i = 0; i < 50; i++) {
+    const star = document.createElement("div");
+    star.className = "starburst";
+
+    const x = (Math.random() - 0.5) * 500 + "px";
+    const y = (Math.random() - 0.5) * 500 + "px";
+
+    star.style.setProperty("--x", x);
+    star.style.setProperty("--y", y);
+
+    star.style.left = "50%";
+    star.style.top = "50%";
+
+    document.body.appendChild(star);
+
+    setTimeout(() => star.remove(), 1000);
+  }
+}
+
+/* 🔐 CONTRASEÑA */
+function checkPass() {
+  const value = document.getElementById("pass").value.toLowerCase().trim();
+
+  if (value === "chocolate") {
+
+    createBurst();
+
+    setTimeout(() => {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("universe").style.display = "block";
+    }, 700);
+
+  } else {
+    alert("❌ Incorrecto 💖");
+  }
+}
 
 /* ⭐ ESTRELLAS */
 for (let i = 0; i < 300; i++) {
@@ -237,7 +296,7 @@ for (let i = 0; i < 300; i++) {
   u.appendChild(s);
 }
 
-/* ☄️ METEORITOS */
+/* ☄️ EFECTOS */
 function meteor() {
   let m = document.createElement("div");
   m.className = "meteor";
@@ -247,7 +306,6 @@ function meteor() {
   setTimeout(() => m.remove(), 1800);
 }
 
-/* 🌠 FUGACES */
 function shootingStar() {
   let s = document.createElement("div");
   s.className = "shooting-star";
@@ -260,7 +318,7 @@ function shootingStar() {
 setInterval(meteor, 2000);
 setInterval(shootingStar, 1200);
 
-/* 🎵 MÚSICA “FELIZ CUMPLEAÑOS” OFFLINE */
+/* 🎵 MÚSICA */
 let audioCtx;
 let playing = false;
 
@@ -271,9 +329,8 @@ function startMusic() {
   playing = true;
 
   const notes = [
-    261.63, 261.63, 293.66, 261.63, 349.23, 329.63,
-    261.63, 261.63, 293.66, 261.63, 392.00, 349.23,
-    261.63, 261.63, 523.25, 440.00, 349.23, 329.63, 293.66
+    261.63, 261.63, 293.66, 261.63,
+    349.23, 329.63, 261.63
   ];
 
   let i = 0;
@@ -301,6 +358,7 @@ function startMusic() {
 
 document.getElementById("musicBtn").addEventListener("click", startMusic);
 document.body.addEventListener("touchstart", startMusic, { once: true });
+
 </script>
 
 </body>
