@@ -15,17 +15,18 @@ html, body {
   font-family: Arial;
 }
 
-/* 🌌 FONDO GALAXIA */
+/* 🌌 UNIVERSO (medio) */
 #universe {
   position: fixed;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background:
     radial-gradient(circle at 20% 30%, rgba(255,0,150,0.15), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(0,200,255,0.12), transparent 45%),
     radial-gradient(circle at top, #2a0a3d, #000 70%);
   animation: drift 20s infinite alternate;
-  overflow: hidden;
+  z-index: 1;
 }
 
 @keyframes drift {
@@ -33,7 +34,7 @@ html, body {
   100% { filter: hue-rotate(20deg); }
 }
 
-/* ⭐ ESTRELLAS */
+/* ⭐ ESTRELLAS (FONDO - DETRÁS DE TODO) */
 .star {
   position: absolute;
   width: 2px;
@@ -43,7 +44,7 @@ html, body {
   opacity: 0.8;
   box-shadow: 0 0 6px white;
   animation: twinkle 4s infinite ease-in-out;
-  z-index: 1;
+  z-index: 0;
 }
 
 @keyframes twinkle {
@@ -99,7 +100,7 @@ html, body {
   to { transform: translate(900px, 450px); opacity: 0; }
 }
 
-/* 🌙 LUNA */
+/* 🌙 LUNA (ARRIBA DE TODO) */
 .moon {
   position: absolute;
   top: 6%;
@@ -116,7 +117,7 @@ html, body {
     0 0 60px rgba(255,255,255,0.8),
     0 0 120px rgba(255,255,255,0.3);
   animation: pulse 4s infinite ease-in-out;
-  z-index: 3;
+  z-index: 5;
 }
 
 @keyframes pulse {
@@ -124,7 +125,7 @@ html, body {
   50% { transform: scale(1.05); }
 }
 
-/* 💬 MENSAJES */
+/* 💖 TEXTOS (ARRIBA DE TODO TAMBIÉN) */
 .card {
   position: absolute;
   top: 30%;
@@ -140,7 +141,7 @@ html, body {
   text-align: center;
   font-size: 10px;
   line-height: 1.25;
-  z-index: 5;
+  z-index: 6;
 }
 
 .card2 {
@@ -156,7 +157,7 @@ html, body {
   text-align: center;
   font-size: 9px;
   line-height: 1.25;
-  z-index: 5;
+  z-index: 6;
 }
 
 /* 🎵 BOTÓN MÚSICA */
@@ -165,10 +166,10 @@ html, body {
   bottom: 20px;
   left: 20px;
   z-index: 10;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.15);
   border: 1px solid white;
   color: white;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 10px;
   font-size: 12px;
 }
@@ -193,7 +194,7 @@ html, body {
     Te amo demasiado, más de lo que las palabras pueden explicar.
   </div>
 
-  <!-- 💬 TEXTO SECUNDARIO COMPLETO -->
+  <!-- 💬 TEXTO SECUNDARIO -->
   <div class="card2">
     ODAAAAAA 🐮<br><br>
 
@@ -204,12 +205,12 @@ html, body {
     Tiamuuu muchísimo 💖
   </div>
 
-  <!-- 🎵 AUDIO -->
-  <audio id="music" loop>
+  <!-- 🎵 MÚSICA -->
+  <audio id="music" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0a5a0d2b0.mp3?filename=romantic-piano-ambient-110397.mp3" type="audio/mpeg">
   </audio>
 
-  <button id="musicBtn">🎵 Música</button>
+  <button id="musicBtn">🎵 Tocar para activar música</button>
 
 </div>
 
@@ -252,10 +253,14 @@ setInterval(shootingStar, 1200);
 const music = document.getElementById("music");
 const btn = document.getElementById("musicBtn");
 
-btn.addEventListener("click", () => {
-  music.play();
+function startMusic() {
+  music.volume = 0.6;
+  music.play().catch(() => {});
   btn.style.display = "none";
-});
+}
+
+btn.addEventListener("click", startMusic);
+document.body.addEventListener("touchstart", startMusic, { once: true });
 </script>
 
 </body>
