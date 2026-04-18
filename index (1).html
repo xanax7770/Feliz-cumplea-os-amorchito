@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Acceso Especial</title>
 
 <style>
@@ -35,14 +35,17 @@ button {
   border: none;
   background: #ff0066;
   color: white;
+  cursor: pointer;
 }
 
 /* UNIVERSO */
 #universe {
   display: none;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
 }
 
 /* LUNA */
@@ -50,17 +53,17 @@ button {
   position: absolute;
   top: 10%;
   right: 10%;
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: radial-gradient(circle, #fff, #aaa, #555);
-  box-shadow: 0 0 50px #fff, 0 0 100px #ffccff;
-  animation: moon 3s infinite alternate;
+  box-shadow: 0 0 40px #fff;
+  animation: moonGlow 3s infinite alternate;
 }
 
-@keyframes moon {
-  from { box-shadow: 0 0 40px #fff; }
-  to { box-shadow: 0 0 80px #ff99ff; }
+@keyframes moonGlow {
+  from { box-shadow: 0 0 30px #fff; }
+  to { box-shadow: 0 0 70px #ff99ff; }
 }
 
 /* ESTRELLAS */
@@ -85,9 +88,7 @@ button {
   top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 110px;
-  color: #ff4da6;
-  text-shadow: 0 0 20px #ff4da6, 0 0 40px #ff0066;
+  font-size: 90px;
   animation: beat 1s infinite;
 }
 
@@ -95,36 +96,33 @@ button {
   50% { transform: translate(-50%, -50%) scale(1.2); }
 }
 
-/* MENSAJE PRO */
-.mensaje-pro {
+/* MENSAJE */
+.mensaje {
   position: absolute;
-  top: 58%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 85%;
-  height: 220px;
+  max-height: 200px;
   overflow-y: auto;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.5em;
   color: #ffb3c6;
-  line-height: 1.6em;
   text-shadow: 0 0 10px #ff4da6;
-  background: rgba(0,0,0,0.3);
-  border-radius: 20px;
-  padding: 15px;
   opacity: 0;
   animation: fadeIn 2s forwards;
-  animation-delay: 1.5s;
+  animation-delay: 1s;
 }
 
 @keyframes fadeIn {
   to { opacity: 1; }
 }
 
-/* SCROLL BONITO */
-.mensaje-pro::-webkit-scrollbar {
-  width: 5px;
+/* SCROLL */
+.mensaje::-webkit-scrollbar {
+  width: 4px;
 }
-.mensaje-pro::-webkit-scrollbar-thumb {
+.mensaje::-webkit-scrollbar-thumb {
   background: #ff4da6;
   border-radius: 10px;
 }
@@ -143,15 +141,12 @@ button {
 <div id="universe">
   <div class="moon"></div>
   <div class="heart">❤️</div>
-
-  <div class="mensaje-pro">
-    <div id="texto"></div>
-  </div>
-
-  <audio id="music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
-  </audio>
+  <div class="mensaje" id="texto"></div>
 </div>
+
+<audio id="music" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
 
 <script>
 const PASSWORD = "amor";
@@ -169,35 +164,41 @@ Tiamuuu muchísimo💖`;
 let i = 0;
 
 function check() {
-  let pass = document.getElementById("password").value.toLowerCase();
+  let pass = document.getElementById("password").value.trim().toLowerCase();
 
   if(pass === PASSWORD) {
     document.getElementById("login").style.display = "none";
     document.getElementById("universe").style.display = "block";
+
     crearEstrellas();
-    escribirTexto();
-    document.getElementById("music").play();
+    setTimeout(escribirTexto, 800);
+
+    // activar música (solo después de click)
+    document.getElementById("music").play().catch(()=>{});
   } else {
     document.getElementById("error").innerText = "Clave incorrecta 💔";
   }
 }
 
 function crearEstrellas() {
-  for (let i = 0; i < 300; i++) {
+  const universe = document.getElementById("universe");
+
+  for (let i = 0; i < 250; i++) {
     let star = document.createElement("div");
     star.className = "star";
     star.style.top = Math.random() * 100 + "vh";
     star.style.left = Math.random() * 100 + "vw";
     star.style.animationDuration = (1 + Math.random() * 2) + "s";
-    document.body.appendChild(star);
+    universe.appendChild(star);
   }
 }
 
 function escribirTexto() {
   if (i < mensaje.length) {
-    document.getElementById("texto").innerHTML += mensaje[i] === "\n" ? "<br>" : mensaje[i];
+    document.getElementById("texto").innerHTML +=
+      mensaje[i] === "\n" ? "<br>" : mensaje[i];
     i++;
-    setTimeout(escribirTexto, 35);
+    setTimeout(escribirTexto, 30);
   }
 }
 </script>
