@@ -22,6 +22,7 @@ body {
   text-align: center;
 }
 
+/* BOTONES */
 input {
   padding: 10px;
   border-radius: 20px;
@@ -71,9 +72,13 @@ button {
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  color: pink;
+  width: 85%;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 16px;
+  color: #ffb3c6;
   text-align: center;
+  line-height: 1.5em;
 }
 </style>
 </head>
@@ -81,8 +86,8 @@ button {
 <body>
 
 <div id="login">
-  <h2>🔐 Acceso</h2>
-  <input type="password" id="password">
+  <h2>🔐 Acceso privado</h2>
+  <input type="password" id="password" placeholder="Clave">
   <button onclick="check()">Entrar</button>
 </div>
 
@@ -94,10 +99,18 @@ button {
 <script>
 const PASSWORD = "amor";
 
-const mensaje = "Feliz cumpleaños ❤️";
+const mensaje = `Feliz cumpleaños, mi bebe emosha❤️
+
+Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, toyo tiene másh sentido, toyo che siente másh monito. Tu sonrisa es mi lugar favorito y tu forma de ser es algo que nunca dejaré de admirar.
+
+Gachash por cada momento, por cada risa, por cada becho que me llena el alma. Eres lo mejor que me ha pasado y ño cambiaría naya de lo que tenemos.
+
+Decheo que este nuevo año de vida te traiga toyo lo que sueñas, porque te lo mereces más que nadie. Y quelo que sepas que voy a estar a tu lado para celebrarlo todo contigo.
+
+Tiamuuu muchísimo💖`;
 
 function check() {
-  let pass = document.getElementById("password").value;
+  let pass = document.getElementById("password").value.trim();
 
   if(pass === PASSWORD) {
     document.getElementById("login").style.display = "none";
@@ -107,14 +120,14 @@ function check() {
 
     crearEstrellas();
   } else {
-    alert("Clave incorrecta");
+    alert("Clave incorrecta 💔");
   }
 }
 
 function crearEstrellas() {
   const universe = document.getElementById("universe");
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 150; i++) {
     let star = document.createElement("div");
     star.className = "star";
     star.style.top = Math.random() * 100 + "vh";
