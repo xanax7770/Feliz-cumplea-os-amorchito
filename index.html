@@ -15,7 +15,7 @@ html, body {
   font-family: Arial;
 }
 
-/* 🌌 UNIVERSO (medio) */
+/* 🌌 UNIVERSO */
 #universe {
   position: fixed;
   width: 100%;
@@ -34,7 +34,7 @@ html, body {
   100% { filter: hue-rotate(20deg); }
 }
 
-/* ⭐ ESTRELLAS (FONDO - DETRÁS DE TODO) */
+/* ⭐ ESTRELLAS */
 .star {
   position: absolute;
   width: 2px;
@@ -52,33 +52,19 @@ html, body {
   50% { opacity: 1; transform: scale(2); }
 }
 
-/* ☄️ METEORITO */
+/* ☄️ METEORITOS */
 .meteor {
   position: absolute;
   width: 6px;
   height: 6px;
   background: white;
   border-radius: 50%;
-  box-shadow:
-    0 0 15px white,
-    0 0 40px rgba(255,255,255,0.8),
-    0 0 80px rgba(255,255,255,0.4);
+  box-shadow: 0 0 20px white;
   animation: meteorMove 1.8s linear forwards;
   z-index: 2;
 }
 
-.meteor::after {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 2px;
-  background: linear-gradient(to left, white, transparent);
-  top: 2px;
-  left: -120px;
-  transform: rotate(25deg);
-}
-
-/* 🌠 FUGAZ */
+/* 🌠 FUGACES */
 .shooting-star {
   position: absolute;
   width: 3px;
@@ -100,7 +86,7 @@ html, body {
   to { transform: translate(900px, 450px); opacity: 0; }
 }
 
-/* 🌙 LUNA (ARRIBA DE TODO) */
+/* 🌙 LUNA */
 .moon {
   position: absolute;
   top: 6%;
@@ -125,10 +111,10 @@ html, body {
   50% { transform: scale(1.05); }
 }
 
-/* 💖 TEXTOS (ARRIBA DE TODO TAMBIÉN) */
+/* 💖 TEXTOS */
 .card {
   position: absolute;
-  top: 30%;
+  top: 28%;
   left: 50%;
   transform: translateX(-50%);
   width: 85%;
@@ -140,7 +126,7 @@ html, body {
   color: #ffb6c1;
   text-align: center;
   font-size: 10px;
-  line-height: 1.25;
+  line-height: 1.3;
   z-index: 6;
 }
 
@@ -156,11 +142,11 @@ html, body {
   color: #ff9db2;
   text-align: center;
   font-size: 9px;
-  line-height: 1.25;
+  line-height: 1.3;
   z-index: 6;
 }
 
-/* 🎵 BOTÓN MÚSICA */
+/* 🎵 BOTÓN */
 #musicBtn {
   position: absolute;
   bottom: 20px;
@@ -182,35 +168,37 @@ html, body {
 
   <div class="moon"></div>
 
-  <!-- 💖 TEXTO COMPLETO -->
+  <!-- 💖 TEXTO COMPLETO RESTAURADO -->
   <div class="card">
     Feliz cumpleaños, mi bebé hermosa ❤️<br><br>
 
-    Hoy celebro el día en que llegó al mundo la persona que más feliz me hace.  
-    Desde que estás en mi vida todo es diferente: mis días son más bonitos, mis noches más tranquilas  
-    y mi corazón más feliz.<br><br>
+    Hoy es un día muy especial, porque nació la persona que cambió mi vida de una manera que nunca imaginé.<br><br>
 
-    Gracias por existir, por tu sonrisa, por tu forma de ser y por hacerme sentir amado incluso en los días más difíciles.  
-    Te amo demasiado, más de lo que las palabras pueden explicar.
+    Desde que llegaste, todo se siente diferente. Los días son más bonitos, las risas más sinceras y mi corazón más tranquilo cuando estás tú.<br><br>
+
+    Gracias por existir, por ser tú, por tu forma de amar, por tu forma de sonreír y por hacerme sentir tan feliz incluso en mis días difíciles.<br><br>
+
+    No hay palabras suficientes para explicar lo mucho que te amo, pero quiero que siempre lo recuerdes: eres lo más bonito que me ha pasado en la vida ❤️
   </div>
 
-  <!-- 💬 TEXTO SECUNDARIO -->
+  <!-- 💬 TEXTO 2 COMPLETO RESTAURADO -->
   <div class="card2">
     ODAAAAAA 🐮<br><br>
 
-    Choi yio otra vez pidiendo perdón si a veces soy medio tonto o intenso…  
-    pero es que de verdad te amo mucho mucho mucho.<br><br>
+    Choi yio otra vez pidiendo perdón si a veces soy medio tonto, intenso o raro…<br><br>
 
-    Prometo cuidarte, apoyarte y estar contigo siempre, sin importar lo que pase.  
+    Pero es que contigo me nace ser así porque te amo demasiado, demasiado, demasiado.<br><br>
+
+    A veces no sé expresarlo bien, pero siempre estás en mi mente y en mi corazón.<br><br>
+
+    Prometo cuidarte, apoyarte, respetarte y estar contigo en todo momento, sin importar lo que pase.<br><br>
+
+    No importa la distancia, el tiempo o las circunstancias… yo siempre voy a estar aquí para ti.<br><br>
+
     Tiamuuu muchísimo 💖
   </div>
 
-  <!-- 🎵 MÚSICA -->
-  <audio id="music" loop preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0a5a0d2b0.mp3?filename=romantic-piano-ambient-110397.mp3" type="audio/mpeg">
-  </audio>
-
-  <button id="musicBtn">🎵 Tocar para activar música</button>
+  <button id="musicBtn">🎵 Activar música</button>
 
 </div>
 
@@ -249,17 +237,46 @@ function shootingStar() {
 setInterval(meteor, 2000);
 setInterval(shootingStar, 1200);
 
-/* 🎵 MÚSICA */
-const music = document.getElementById("music");
-const btn = document.getElementById("musicBtn");
+/* 🎵 MÚSICA OFFLINE “FELIZ CUMPLEAÑOS” */
+let audioCtx;
+let playing = false;
 
 function startMusic() {
-  music.volume = 0.6;
-  music.play().catch(() => {});
-  btn.style.display = "none";
+  if (playing) return;
+
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  playing = true;
+
+  const notes = [
+    261.63, 261.63, 293.66, 261.63, 349.23, 329.63,
+    261.63, 261.63, 293.66, 261.63, 392.00, 349.23,
+    261.63, 261.63, 523.25, 440.00, 349.23, 329.63, 293.66
+  ];
+
+  let i = 0;
+
+  setInterval(() => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = notes[i % notes.length];
+
+    gain.gain.value = 0.07;
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.4);
+
+    i++;
+  }, 450);
+
+  document.getElementById("musicBtn").style.display = "none";
 }
 
-btn.addEventListener("click", startMusic);
+document.getElementById("musicBtn").addEventListener("click", startMusic);
 document.body.addEventListener("touchstart", startMusic, { once: true });
 </script>
 
