@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Acceso Especial</title>
+<title>Para ti 💖</title>
 
 <style>
 body {
@@ -22,12 +22,10 @@ body {
   text-align: center;
 }
 
-/* BOTONES */
 input {
   padding: 10px;
   border-radius: 20px;
   border: none;
-  text-align: center;
 }
 
 button {
@@ -41,9 +39,6 @@ button {
 /* UNIVERSO */
 #universe {
   display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
 }
 
 /* LUNA */
@@ -51,34 +46,21 @@ button {
   position: absolute;
   top: 10%;
   right: 10%;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff, #aaa, #555);
-  box-shadow: 0 0 40px #fff;
-}
-
-/* ESTRELLAS */
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
   background: white;
+  box-shadow: 0 0 30px white;
 }
 
 /* MENSAJE */
 .mensaje {
   position: absolute;
   top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  max-height: 220px;
-  overflow-y: auto;
-  font-size: 16px;
-  color: #ffb3c6;
+  width: 100%;
   text-align: center;
-  line-height: 1.5em;
+  color: pink;
+  padding: 0 20px;
 }
 </style>
 </head>
@@ -86,53 +68,33 @@ button {
 <body>
 
 <div id="login">
-  <h2>🔐 Acceso privado</h2>
+  <h2>🔐 Acceso</h2>
   <input type="password" id="password" placeholder="Clave">
-  <button onclick="check()">Entrar</button>
+  <br><br>
+  <button onclick="entrar()">Entrar</button>
 </div>
 
 <div id="universe">
   <div class="moon"></div>
-  <div class="mensaje" id="texto"></div>
+
+  <div class="mensaje">
+Feliz cumpleaños, mi bebe emosha❤️<br><br>
+
+Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, toyo tiene másh sentido, toyo che siente másh monito.<br><br>
+
+Tiamuuu muchísimo💖
+  </div>
 </div>
 
 <script>
-const PASSWORD = "amor";
+function entrar() {
+  var pass = document.getElementById("password").value;
 
-const mensaje = `Feliz cumpleaños, mi bebe emosha❤️
-
-Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, toyo tiene másh sentido, toyo che siente másh monito. Tu sonrisa es mi lugar favorito y tu forma de ser es algo que nunca dejaré de admirar.
-
-Gachash por cada momento, por cada risa, por cada becho que me llena el alma. Eres lo mejor que me ha pasado y ño cambiaría naya de lo que tenemos.
-
-Decheo que este nuevo año de vida te traiga toyo lo que sueñas, porque te lo mereces más que nadie. Y quelo que sepas que voy a estar a tu lado para celebrarlo todo contigo.
-
-Tiamuuu muchísimo💖`;
-
-function check() {
-  let pass = document.getElementById("password").value.trim();
-
-  if(pass === PASSWORD) {
+  if(pass === "amor") {
     document.getElementById("login").style.display = "none";
     document.getElementById("universe").style.display = "block";
-
-    document.getElementById("texto").innerText = mensaje;
-
-    crearEstrellas();
   } else {
-    alert("Clave incorrecta 💔");
-  }
-}
-
-function crearEstrellas() {
-  const universe = document.getElementById("universe");
-
-  for (let i = 0; i < 150; i++) {
-    let star = document.createElement("div");
-    star.className = "star";
-    star.style.top = Math.random() * 100 + "vh";
-    star.style.left = Math.random() * 100 + "vw";
-    universe.appendChild(star);
+    alert("Clave incorrecta");
   }
 }
 </script>
