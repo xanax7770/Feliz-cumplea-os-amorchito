@@ -15,7 +15,7 @@ html, body {
   font-family: Arial;
 }
 
-/* 🌌 FONDO NEBULOSA */
+/* 🌌 FONDO GALAXIA */
 #universe {
   position: fixed;
   width: 100%;
@@ -75,6 +75,23 @@ html, body {
   top: 2px;
   left: -120px;
   transform: rotate(25deg);
+}
+
+/* 🌠 FUGAZ */
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  box-shadow: 0 0 12px white;
+  border-radius: 50%;
+  animation: shoot 1s linear forwards;
+  z-index: 2;
+}
+
+@keyframes shoot {
+  from { transform: translate(0,0); opacity: 1; }
+  to { transform: translate(500px, 250px); opacity: 0; }
 }
 
 @keyframes meteorMove {
@@ -141,6 +158,20 @@ html, body {
   line-height: 1.25;
   z-index: 5;
 }
+
+/* 🎵 BOTÓN MÚSICA */
+#musicBtn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid white;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
 </style>
 </head>
 
@@ -173,6 +204,13 @@ html, body {
     Tiamuuu muchísimo 💖
   </div>
 
+  <!-- 🎵 AUDIO -->
+  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d0a5a0d2b0.mp3?filename=romantic-piano-ambient-110397.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="musicBtn">🎵 Música</button>
+
 </div>
 
 <script>
@@ -197,7 +235,27 @@ function meteor() {
   setTimeout(() => m.remove(), 1800);
 }
 
-setInterval(meteor, 3500);
+/* 🌠 FUGACES */
+function shootingStar() {
+  let s = document.createElement("div");
+  s.className = "shooting-star";
+  s.style.top = Math.random() * 50 + "%";
+  s.style.left = Math.random() * 100 + "%";
+  u.appendChild(s);
+  setTimeout(() => s.remove(), 1000);
+}
+
+setInterval(meteor, 2000);
+setInterval(shootingStar, 1200);
+
+/* 🎵 MÚSICA */
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+
+btn.addEventListener("click", () => {
+  music.play();
+  btn.style.display = "none";
+});
 </script>
 
 </body>
