@@ -21,7 +21,7 @@ body {
   background: radial-gradient(circle at center, #0a0a1a, #000000);
 }
 
-/* 🌙 MEDIA LUNA REALISTA */
+/* 🌙 LUNA REALISTA */
 .moon {
   position: absolute;
   top: 8%;
@@ -30,30 +30,33 @@ body {
   height: 150px;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #ffffff, #e6e6e6, #bdbdbd);
-  box-shadow: 0 0 60px rgba(255,255,255,0.9),
-              0 0 120px rgba(255,180,255,0.3);
   overflow: hidden;
 }
 
-/* 🌑 sombra (fase lunar) */
+/* sombra lunar */
 .moon::after {
   content: "";
   position: absolute;
   top: 0;
-  left: 55px; /* ajusta la fase */
+  left: 55px;
   width: 150px;
   height: 150px;
   background: radial-gradient(circle, rgba(0,0,0,0.95), black 70%);
   border-radius: 50%;
 }
 
-/* ✨ brillo interno */
+/* brillo direccional */
 .moon::before {
   content: "";
   position: absolute;
   inset: 0;
-  box-shadow: inset -20px 0 40px rgba(255,255,255,0.2);
-  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.15),
+    transparent 60%
+  );
+  filter: blur(2px);
 }
 
 /* ✨ ESTRELLAS */
@@ -92,7 +95,7 @@ body {
 /* 💖 MENSAJE */
 .mensaje {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 75%;
@@ -106,6 +109,69 @@ body {
   border-radius: 15px;
   backdrop-filter: blur(4px);
   z-index: 10;
+  white-space: pre-line;
+}
+
+/* 💓 CORAZÓN LATIENDO REALISTA */
+.heart {
+  position: absolute;
+  top: 78%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  background: #ff4d6d;
+  transform: translateX(-50%) rotate(-45deg);
+  box-shadow: 0 0 20px #ff4d6d;
+  z-index: 9;
+  animation: beat 1.2s infinite;
+}
+
+/* forma corazón */
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: #ff4d6d;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -45px;
+  left: 0;
+}
+
+.heart::after {
+  left: 45px;
+  top: 0;
+}
+
+/* 💓 LATIDO REALISTA */
+@keyframes beat {
+  0%, 100% {
+    transform: translateX(-50%) rotate(-45deg) scale(1);
+    box-shadow: 0 0 15px #ff4d6d;
+    filter: brightness(1);
+  }
+
+  25% {
+    transform: translateX(-50%) rotate(-45deg) scale(1.08);
+    box-shadow: 0 0 25px #ff4d6d;
+    filter: brightness(1.2);
+  }
+
+  50% {
+    transform: translateX(-50%) rotate(-45deg) scale(1.15);
+    box-shadow: 0 0 40px #ff4d6d;
+    filter: brightness(1.4);
+  }
+
+  75% {
+    transform: translateX(-50%) rotate(-45deg) scale(1.05);
+    box-shadow: 0 0 20px #ff4d6d;
+    filter: brightness(1.1);
+  }
 }
 </style>
 </head>
@@ -122,6 +188,8 @@ Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Des
 
 Te amo muchísimo 💖
   </div>
+
+  <div class="heart"></div>
 </div>
 
 <script>
@@ -131,8 +199,10 @@ const u = document.getElementById("universe");
 for (let i = 0; i < 200; i++) {
   let s = document.createElement("div");
   s.className = "star";
+
   s.style.top = Math.random() * window.innerHeight + "px";
   s.style.left = Math.random() * window.innerWidth + "px";
+
   u.appendChild(s);
 }
 
