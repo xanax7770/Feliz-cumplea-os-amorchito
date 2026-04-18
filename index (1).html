@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Acceso Especial</title>
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+#login {
+  position: absolute;
+  width: 100%;
+  top: 40%;
+}
+
+input {
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #ff0066;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#universe {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Imagen en esquina superior izquierda */
+#topImage {
+  position: absolute;
+  top: 10px;
+  left: 70px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  z-index: 200;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+/* Estrellas fijas con parpadeo aleatorio */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+/* Lluvia de estrellas */
+.shooting {
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall 1.5s linear forwards;
+}
+
+@keyframes fall {
+  from { transform: translateY(0) translateX(0); opacity: 1; }
+  to { transform: translateY(600px) translateX(-50px); opacity: 0; }
+}
+
+/* Estrellas fugaces */
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white, 0 0 20px #ff4da6;
+  opacity: 0;
+  transform: translate(0,0);
+  animation: shoot-star 1s linear forwards;
+  z-index: 500;
+}
+
+@keyframes shoot-star {
+  0% { transform: translate(0,0); opacity: 1; }
+  100% { transform: translate(300px, 300px); opacity: 0; }
+}
+
+/* Mensaje central */
+.message {
+  position: absolute;
+  top: 40%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  font-size: 70px;
+  color: #ff4da6;
+  text-shadow: 0 0 20px #ff4da6;
+  animation: glow 2s infinite alternate;
+}
+
+/* Mensaje bajado */
+.message-sub {
+  position: absolute;
+  top: 62%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  font-size: 35px;
+  color: #ff99c8;
+  text-shadow: 0 0 10px #ff4da6;
+  animation: glowSub 2s infinite alternate;
+}
+
+/* Mensaje largo */
+.message-extra {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #ffb3c6;
+  width: 80%;
+  text-align: center;
+  line-height: 1.4em;
+  text-shadow: 0 0 5px #ff4da6;
+  animation: glowExtra 3s infinite alternate;
+}
+
+/* Texto gigante abajo */
+.message-bottom {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: #ff4da6;
+  text-shadow: 0 0 20px #ff4da6, 0 0 40px #ff0066;
+}
+
+/* Luna brillante */
+.moon {
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #aaaaaa 70%, #555555);
+  box-shadow: 0 0 50px #ffffff, 0 0 100px #aaaaaa;
+  animation: moonGlow 2s infinite alternate, moonFloat 6s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+@keyframes moonGlow {
+  from { box-shadow: 0 0 50px #ffffff, 0 0 100px #aaaaaa; }
+  to   { box-shadow: 0 0 70px #ffffff, 0 0 140px #ffddff; }
+}
+@keyframes moonFloat {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(20px); }
+}
+
+/* Mensajes girando alrededor (centrales) */
+.orbit-ring {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 47%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+  animation: spin 20s linear infinite;
+}
+
+.orbit-ring span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: rotateY(calc(var(--i) * 45deg)) translateZ(200px);
+  font-size: 40px;
+  color: white;
+  text-shadow: 0 0 10px white, 0 0 20px #ff4da6;
+}
+
+/* Nueva órbita inferior (mensajes mágicos) */
+.orbit-bottom {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  bottom: 100px; 
+  left: 50%;
+  transform: translateX(-50%);
+  transform-style: preserve-3d;
+  animation: spin 15s linear infinite;
+}
+
+.orbit-bottom span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: rotateY(calc(var(--i) * 90deg)) translateZ(150px);
+  font-size: 25px;
+  color: #ff99c8;
+  text-shadow: 0 0 5px white, 0 0 10px #ff4da6;
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotateY(0deg); }
+  to { transform: translate(-50%, -50%) rotateY(360deg); }
+}
+
+/* Corazón gigante que late */
+.heart {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  font-size: 120px;
+  color: #ff4da6;
+  text-shadow: 0 0 20px #ff4da6, 0 0 40px #ff0066;
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  25% { transform: translate(-50%, -50%) scale(1.2); }
+  50% { transform: translate(-50%, -50%) scale(1); }
+  75% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #ff4da6; }
+  to { text-shadow: 0 0 40px #ff0066; }
+}
+@keyframes glowSub {
+  from { text-shadow: 0 0 5px #ff4da6; }
+  to { text-shadow: 0 0 20px #ff99c8; }
+}
+@keyframes glowExtra {
+  from { text-shadow: 0 0 5px #ff4da6; }
+  to { text-shadow: 0 0 15px #ff99c8; }
+}
+</style>
+</head>
+<body>
+
+<img id="topImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS7UFnnnS-73etBhFKWuE4A8GcXcKZcPBAQpky50FGYGq01pULEDKPF_s&s=10" alt="Imagen especial">
+
+<div id="login">
+  <h2>🔐 Solo alguien especial puede entrar</h2>
+  <input type="password" id="password" placeholder="Ingresa la clave">
+  <button onclick="check()">Entrar</button>
+  <p id="error" style="color:red;"></p>
+</div>
+
+<div id="universe">
+  <div class="moon"></div>
+
+  <div class="message">Nicole 💖<br>Te Amo ✨</div>
+  <div class="message-sub">Eres el amor de mi vida y te amo con todo mi corazón 💕🌙💖</div>
+
+  <div class="message-extra">
+Gracias por todo este tiempo que me permitiste estar a tu lado enserio ño sabesh cuanto te amo y te quelo mi bebe emosha eresh lo mas importante en mi vida nunca lo olvides otei?❤️💖😍 te amo con todo mi corazón mi niña emosha pishosha tal vez esto ño sea mucho pidon 🥺 gachas por todo bebe y pidon por tan poco que tengo para darte esto al lado de otra cosa es una mrd veda pero puesh pidoname bebe 😘💝 solo queria que supieras que siempre te voy a amar con toda mi alma❤️💖💫💞
+  </div>
+
+  <div class="orbit-ring">
+    <span style="--i:0">Mi universo ✨</span>
+    <span style="--i:1">Mi lugar seguro 🌙</span>
+    <span style="--i:2">Mi felicidad 💕</span>
+    <span style="--i:3">Mi estrella favorita 🌟</span>
+    <span style="--i:4">Mi todo 💖</span>
+    <span style="--i:5">Mi destino ✨</span>
+    <span style="--i:6">Mi razón 🌌</span>
+    <span style="--i:7">Mi siempre 💞</span>
+  </div>
+
+  <div class="heart">❤️</div>
+
+  <!-- Mensajes giratorios mágicos arriba del texto inferior -->
+  <div class="orbit-bottom">
+    <span style="--i:0">mi bebe enojona 😘</span>
+    <span style="--i:1">mi bebe berrinchuda 💖</span>
+    <span style="--i:2">changuita emosha 🐵</span>
+    <span style="--i:3">ratona con cola 🐭</span>
+  </div>
+
+  <div class="message-bottom">GACHASH POR TODO MI BEBE EMOSHA 💖✨</div>
+
+  <audio id="music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+  </audio>
+</div>
+
+<script>
+function check() {
+  let pass = document.getElementById("password").value.toLowerCase();
+  if(pass === "bebe emosha") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("universe").style.display = "block";
+    crearUniverso();
+    document.getElementById("music").play();
+  } else {
+    document.getElementById("error").innerText = "Clave incorrecta 💔";
+  }
+}
+
+function crearUniverso() {
+  const universe = document.getElementById("universe");
+
+  // Estrellas fijas con parpadeo aleatorio
+  for (let i = 0; i < 400; i++) {
+    let star = document.createElement("div");
+    star.className = "star";
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.animationDuration = (1 + Math.random() * 2) + "s"; 
+    star.style.animationDelay = Math.random() * 2 + "s"; 
+    universe.appendChild(star);
+  }
+
+  // Lluvia de estrellas
+  setInterval(() => {
+    let shooting = document.createElement("div");
+    shooting.className = "shooting";
+    shooting.style.top = "0px";
+    shooting.style.left = Math.random() * window.innerWidth + "px";
+    universe.appendChild(shooting);
+    setTimeout(() => shooting.remove(), 1500);
+  }, 200);
+
+  // Estrellas fugaces
+  setInterval(() => {
+    let star = document.createElement("div");
+    star.className = "shooting-star";
+    star.style.top = Math.random() * window.innerHeight * 0.5 + "px";
+    star.style.left = Math.random() * window.innerWidth * 0.8 + "px";
+    universe.appendChild(star);
+    setTimeout(() => star.remove(), 1000);
+  }, 3000);
+
+  // Mensajes giratorios mágicos: parpadeo, color y tamaño aleatorio
+  document.querySelectorAll('.orbit-bottom span').forEach(msg => {
+    let duration = 1 + Math.random() * 2;
+    let delay = Math.random() * 2;
+    msg.style.animation = `glowMsg ${duration}s infinite alternate`;
+    msg.style.animationDelay = `${delay}s`;
+    let fontSize = 20 + Math.random() * 10;
+    msg.style.fontSize = `${fontSize}px`;
+    const colors = ['#ff99c8', '#ff4da6', '#ff66cc', '#ffb3c6'];
+    msg.style.color = colors[Math.floor(Math.random() * colors.length)];
+  });
+
+  const style = document.createElement('style');
+  style.innerHTML = `
+  @keyframes glowMsg {
+    from { text-shadow: 0 0 5px white, 0 0 10px #ff4da6; }
+    to { text-shadow: 0 0 15px #ffffff, 0 0 25px #ff4da6; }
+  }`;
+  document.head.appendChild(style);
+}
+</script>
+
+</body>
+</html>
