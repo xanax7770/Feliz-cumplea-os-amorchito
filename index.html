@@ -8,9 +8,9 @@
 <style>
 body {
   margin: 0;
-  background: black;
   overflow: hidden;
   font-family: Arial;
+  background: black;
 }
 
 /* LOGIN */
@@ -27,34 +27,61 @@ body {
 #universe {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  background: black;
+  background: radial-gradient(circle at center, #0a0a1a, #000000);
+  overflow: hidden;
 }
 
-/* LUNA */
+/* 🌙 LUNA MEJORADA */
 .moon {
   position: absolute;
   top: 10%;
   right: 10%;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff, #aaa, #555);
-  box-shadow: 0 0 40px white, 0 0 80px #ff99ff;
-  z-index: 3;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #e6e6e6, #bfbfbf);
+  box-shadow: 0 0 60px rgba(255,255,255,0.8), 0 0 120px rgba(255,180,255,0.4);
+}
+
+/* CRÁTERES */
+.moon::before,
+.moon::after {
+  content: "";
+  position: absolute;
+  background: rgba(150,150,150,0.4);
+  border-radius: 50%;
+}
+
+.moon::before {
+  width: 25px;
+  height: 25px;
+  top: 35px;
+  left: 40px;
+}
+
+.moon::after {
+  width: 18px;
+  height: 18px;
+  top: 80px;
+  left: 90px;
 }
 
 /* ESTRELLAS */
 .star {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 2px;
+  height: 2px;
   background: white;
   border-radius: 50%;
-  z-index: 1;
+  opacity: 0.2;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.8); }
 }
 
 /* FUGACES */
@@ -70,15 +97,16 @@ body {
 
 @keyframes shoot {
   from { transform: translate(0,0); opacity: 1; }
-  to { transform: translate(400px,400px); opacity: 0; }
+  to { transform: translate(600px,300px); opacity: 0; }
 }
 
 /* MENSAJES */
 .float-msg {
   position: absolute;
   color: pink;
-  font-size: 14px;
-  animation: floatUp 6s linear forwards;
+  font-size: 16px;
+  text-shadow: 0 0 10px pink;
+  animation: floatUp 5s ease-in-out forwards;
 }
 
 @keyframes floatUp {
@@ -86,14 +114,19 @@ body {
   to { transform: translateY(-200px); opacity: 0; }
 }
 
-/* TEXTO */
+/* TEXTO PRINCIPAL */
 .mensaje {
   position: absolute;
-  top: 60%;
-  width: 100%;
+  top: 55%;
+  width: 90%;
+  left: 5%;
   text-align: center;
   color: pink;
   z-index: 5;
+  font-size: 16px;
+  line-height: 1.5;
+  text-shadow: 0 0 10px pink;
+  white-space: pre-line;
 }
 </style>
 </head>
@@ -110,7 +143,15 @@ body {
   <div class="moon"></div>
 
   <div class="mensaje">
-    Feliz cumpleaños, mi bebe emosha ❤️
+Feliz cumpleaños, mi bebe emosha❤️
+
+Hoy celebro el día en que llegó al mundo la persona que más feli me ache. Desde que estás conmigo, toyo tiene másh sentido, toyo che siente másh monito. Tu sonrisa es mi lugar favorito y tu forma de ser es algo que nunca dejaré de admirar.
+
+Gachash por cada momento, por cada risa, por cada becho que me llena el alma. Eres lo mejor que me ha pasado y ño cambiaría naya de lo que tenemos.
+
+Decheo que este nuevo año de vida te traiga toyo lo que sueñas, porque te lo mereces más que nadie. Y quelo que sepas que voy a estar a tu lado para celebrarlo todo contigo.
+
+Tiamuuu muchísimo💖
   </div>
 </div>
 
@@ -136,8 +177,9 @@ function crearEstrellas() {
     let star = document.createElement("div");
     star.className = "star";
 
-    star.style.top = Math.random() * 100 + "%";
-    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * window.innerHeight + "px";
+    star.style.left = Math.random() * window.innerWidth + "px";
+    star.style.animationDuration = (Math.random() * 3 + 1) + "s";
 
     universe.appendChild(star);
   }
@@ -159,7 +201,7 @@ function crearFugaz() {
 }
 
 /* MENSAJES */
-const msgs = ["Te amo 💖","Mi universo 🌌","Mi todo ✨"];
+const msgs = ["Te amo 💖","Mi universo 🌌","Mi todo ✨","Siempre tú ❤️"];
 
 function crearMensaje() {
   const u = document.getElementById("universe");
@@ -173,7 +215,7 @@ function crearMensaje() {
 
   u.appendChild(m);
 
-  setTimeout(() => m.remove(), 6000);
+  setTimeout(() => m.remove(), 5000);
 }
 </script>
 
